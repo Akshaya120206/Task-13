@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Timer</title>
+  <style>
+    body {
+      background-color: #eaf3f9;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    h1 {
+      font-size: 48px;
+      color: #4a707a;
+    }
+
+    #timer {
+      font-size: 40px;
+      margin: 20px 0;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+    }
+
+    #startBtn {
+      background-color: #5a8f7b;
+    }
+
+    #stopBtn {
+      background-color: #e74c3c;
+    }
+
+    #resetBtn {
+      background-color: #90ee90;
+      color: black;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>TIMER</h1>
+  <div id="timer">25 : 00</div>
+
+  <button id="startBtn">START</button>
+  <button id="stopBtn">STOP</button>
+  <button id="resetBtn">RESET</button>
+
+  <script>
+    let minutes = 25;
+    let seconds = 0;
+    let interval;
+
+    const timerDisplay = document.getElementById("timer");
+    const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    function updateDisplay() {
+      timerDisplay.textContent = `${String(minutes).padStart(2, '0')} : ${String(seconds).padStart(2, '0')}`;
+    }
+
+    function startTimer() {
+      if (!interval) {
+        interval = setInterval(() => {
+          if (seconds === 0) {
+            if (minutes === 0) {
+              clearInterval(interval);
+              interval = null;
+              return;
+            }
+            minutes--;
+            seconds = 59;
+          } else {
+            seconds--;
+          }
+          updateDisplay();
+        }, 1000);
+      }
+    }
+
+    function stopTimer() {
+      clearInterval(interval);
+      interval = null;
+    }
+
+    function resetTimer() {
+      clearInterval(interval);
+      interval = null;
+      minutes = 25;
+      seconds = 0;
+      updateDisplay();
+    }
+
+    startBtn.addEventListener("click", startTimer);
+    stopBtn.addEventListener("click", stopTimer);
+    resetBtn.addEventListener("click", resetTimer);
+
+    updateDisplay(); // Initial display
+  </script>
+
+</body>
+</html>
